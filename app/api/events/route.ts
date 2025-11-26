@@ -36,3 +36,23 @@ export async function POST(req:NextRequest,res:NextResponse) {
     }
     
 }
+
+export async function GET() {
+
+    try {
+        await connectDB()
+
+        const events = await Event.find().sort({created:-1})
+                console.log(events,"events")
+            if(!events){
+                return NextResponse.json({message:"Events not founded"})
+            }
+
+             return  NextResponse.json({message:"Event fetching successfully", event:events},{status:200})
+
+
+    } catch (e) {
+       return NextResponse.json({message:"Event fetching failed", error: e instanceof Error ? e.message : "unknown"},{status:500})       
+    }
+    
+}
