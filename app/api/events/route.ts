@@ -1,6 +1,10 @@
+import { v2 as cloudinary } from 'cloudinary'
 import connectDB from "@/lib/mongodb";
 import Event from "@/database/event.model";
 import { NextRequest, NextResponse } from "next/server";
+import { resolve } from "path";
+import { rejects } from "assert";
+import streamifier from "streamifier";
 
 export async function POST(req:NextRequest,res:NextResponse) {
     try {
@@ -20,6 +24,26 @@ export async function POST(req:NextRequest,res:NextResponse) {
             { status: 400 }
         )
         }
+
+         const file = formData.get("image") as File;
+
+         if(!file){
+            return NextResponse.json({message:"Image is required"} , {status:400})
+         }
+         const arrayBuffer = await file.arrayBuffer()
+
+         const buffer  = Buffer.from(arrayBuffer)
+
+         const uploadResult = await new Promise((resolve, reject) => {
+         cloudinary.uploader.upload_stream({ resource_type: "image", folder: "DevEvent" }, (error, result) => {
+                if (error) return reject(error)
+                resolve(result)
+            }).end(buffer)
+            // streamifier.createReadStream(buffer).pipe(stream)
+         })
+         
+    event.image = (uploadResult as {secure_url :string}).secure_url;
+
 
         const createdEvent = await Event.create(event)
 
