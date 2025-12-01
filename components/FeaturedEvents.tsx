@@ -1,7 +1,8 @@
-import React from 'react'
+import { IEvent } from '@/database'
 import EventCard from './EventCard'
 import events from '@/lib/constants'
-const FeaturedEvents = () => {
+import axios from 'axios'
+const FeaturedEvents = async () => {
 
     // const events = [
     //     { title:"Github Developer Events",
@@ -14,12 +15,18 @@ const FeaturedEvents = () => {
     //         image:"/images/event3.png"
     //     }
     // ]
+   const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/events`)
+     const events = await res.data.event
 
+      
   return (
+
+   <>
+
     <div className='mt-20 space-y-7' id='events'>
         <h3>Featured Events</h3>
       <ul className='events list-none'>
-       {events.map((event) => (
+       {events.map((event:IEvent) => (
         <li key={event.title}>
 
             <EventCard  {...event}/>
@@ -27,6 +34,8 @@ const FeaturedEvents = () => {
        ))}
       </ul>
     </div>
+   </>
+
   )
 }
 

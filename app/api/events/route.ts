@@ -2,9 +2,7 @@ import { v2 as cloudinary } from 'cloudinary'
 import connectDB from "@/lib/mongodb";
 import Event from "@/database/event.model";
 import { NextRequest, NextResponse } from "next/server";
-import { resolve } from "path";
-import { rejects } from "assert";
-import streamifier from "streamifier";
+
 
 export async function POST(req:NextRequest,res:NextResponse) {
     try {
@@ -67,7 +65,7 @@ export async function GET() {
         await connectDB()
 
         const events = await Event.find().sort({created:-1})
-                console.log(events,"events")
+            
             if(!events){
                 return NextResponse.json({message:"Events not founded"})
             }
