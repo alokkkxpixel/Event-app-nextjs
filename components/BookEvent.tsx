@@ -1,11 +1,12 @@
 "use client"
 
+import { createBooking } from "@/lib/actions/booking.action"
 import { useState } from "react"
 
 
 
 
- const BookEvent = () => {
+ const BookEvent = ({eventId , slug} :{eventId : string , slug:string}) => {
       
 const [email, setEmail] = useState('')
 const [submitted, Setsubmitted] = useState(false)
@@ -14,6 +15,8 @@ const [submitted, Setsubmitted] = useState(false)
 
    const handleSubmit = (e:React.FormEvent) =>{
     e.preventDefault()
+
+     const booking  = createBooking({eventId, slug, email})  
 
     setTimeout(() => {
          Setsubmitted(true)
