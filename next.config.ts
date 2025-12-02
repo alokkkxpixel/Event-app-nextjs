@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
 
 
-
+cacheComponents:true,
   images:{
     remotePatterns:[
       {
@@ -15,10 +15,12 @@ const nextConfig: NextConfig = {
     ]
   }
 ,
-  reactCompiler:true,
+  reactCompiler:false,
   experimental:{
-    turbopackFileSystemCacheForDev:true,
+ 
+    turbopackFileSystemCacheForDev:false,
   },
+    productionBrowserSourceMaps: false,
   async rewrites(){
     return [
       {

@@ -1,4 +1,5 @@
 import { Schema, model, models, Document } from 'mongoose';
+import { Turret_Road } from 'next/font/google';
 
 // TypeScript interface for Event document
 export interface IEvent extends Document {
@@ -30,6 +31,7 @@ const EventSchema = new Schema<IEvent>(
     },
     slug: {
       type: String,
+      required:true,
       unique: true,
       lowercase: true,
       trim: true,
@@ -177,8 +179,8 @@ function normalizeTime(timeString: string): string {
   return `${hours.toString().padStart(2, '0')}:${minutes}`;
 }
 
-// Create unique index on slug for better performance
-EventSchema.index({ slug: 1 }, { unique: true });
+// // Create unique index on slug for better performance
+// EventSchema.index({ slug: 1 }, { unique: true });
 
 // Create compound index for common queries
 EventSchema.index({ date: 1, mode: 1 });

@@ -1,5 +1,7 @@
 import BookEvent from '@/components/BookEvent'
+import EventCard from '@/components/EventCard'
 import { IEvent } from '@/database'
+import { getSimilarEventBySlug } from '@/lib/actions/event.actions'
 import axios from 'axios'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
@@ -45,7 +47,7 @@ const EVentDetailsPage = async ({ params }: { params: Promise<{ slug: string }> 
 
    const { slug } = await params
 
-   //    console.log("slug", slug)
+   
    const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/events/${slug}`)
 
    if (res.status === 404 || res.status === 500) {
@@ -61,7 +63,11 @@ const EVentDetailsPage = async ({ params }: { params: Promise<{ slug: string }> 
       return notFound()
    }
 
-   //   console.log(event)
+
+
+    const similarEvents: IEvent[] = (await getSimilarEventBySlug(slug)) ?? []
+
+
 
    return (
       <section id='event'>
@@ -114,6 +120,18 @@ const EVentDetailsPage = async ({ params }: { params: Promise<{ slug: string }> 
                   <BookEvent />
                </div>
             </aside>
+
+
+         </div>
+
+         <div className="flex flex-col w-full gap-4 pt-10">
+            <h2>Similar Events</h2>
+
+            <div className="events">
+               {similarEvents.length > 0 && similarEvents.map((e)=>(
+                    <EventCard key={e.title} {...e} />
+            ))}
+            </div>
          </div>
       </section>
    )

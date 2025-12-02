@@ -21,10 +21,9 @@ type RouteParams = {
 
         await connectDB()
         const { slug } = await params // if the folder name is [id] then we detruct {id} = params
-        console.log("params" , params)
+       
  
 
-        console.log(slug,"slug")
 
         if (!slug || typeof slug !== "string"
             || slug.trim() === ""
