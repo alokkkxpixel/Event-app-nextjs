@@ -25,6 +25,8 @@ const UserSchema = new Schema<IUser>(
       minlength: [3, "Username must be at least 3 characters"],
       maxlength: [20, "Username must be at most 20 characters"],
       lowercase: true,
+      match: [/^[a-zA-Z0-9_-]+$/, "Username can only contain letters, numbers, - and _"]
+
     },
 
     email: {
@@ -54,15 +56,15 @@ const UserSchema = new Schema<IUser>(
 // --------------------------------------
 // Auto-generate slug from username
 // --------------------------------------
-UserSchema.pre("save",  async function (next) {
-    //if the username is modify or change then generate new Slug
-  if (this.isModified("username")|| this.isNew) {
 
-      this.slug = generateSlug(this.username)
+UserSchema.pre("save",async function (this:IUser ) {
+  if (this.isNew || this.isModified("username")) {
+    this.slug = generateSlug(this.username);
   }
-
- 
+  
 });
+
+
 
 // Helper function to generate URL-friendly slug
 function generateSlug(username: string): string {
