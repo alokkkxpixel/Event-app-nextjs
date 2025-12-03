@@ -1,5 +1,6 @@
-import { Schema, model, models, Document } from 'mongoose';
+import { Schema, model, models, Document, Types } from 'mongoose';
 import { Turret_Road } from 'next/font/google';
+import { KTXTexture } from 'ogl';
 
 // TypeScript interface for Event document
 export interface IEvent extends Document {
@@ -17,6 +18,7 @@ export interface IEvent extends Document {
   agenda: string[];
   organizer: string;
   tags: string[];
+  userId: Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -105,6 +107,11 @@ const EventSchema = new Schema<IEvent>(
         message: 'At least one tag is required',
       },
     },
+    userId:{
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required:[true, 'User is Required']
+    }
   },
   {
     timestamps: true, // Auto-generate createdAt and updatedAt

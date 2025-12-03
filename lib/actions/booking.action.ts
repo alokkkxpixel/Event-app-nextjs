@@ -20,4 +20,4 @@ export const createBooking = async ({eventId, slug , email} :{eventId:string,slu
         return {success : false , e:e}
         
     }
-}
+}     
