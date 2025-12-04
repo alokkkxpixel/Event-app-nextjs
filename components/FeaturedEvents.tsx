@@ -8,7 +8,7 @@ const FeaturedEvents = async () => {
 "use cache"
 cacheLife('hours')
 
-   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/events`)
+   const res = await fetch(`/api/events`)
    const data = await res.json()
  
 

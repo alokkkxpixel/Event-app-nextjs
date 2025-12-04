@@ -10,6 +10,7 @@ import {
 import LightRays from "@/components/LightRays";
 import NavbarDash from "@/components/NavbarDash";
 import ClickSpark from "@/components/ClickSpark";
+import { UserProvider } from "@/context/UserContext";
 
 const schibstedGrotesk = Schibsted_Grotesk({
   variable: "--font-schibsted-grotesk",
@@ -38,10 +39,13 @@ export default function RootLayout({
       >
         <NavbarDash />
        
+<UserProvider>
+  
 
           <main>
             
             {children}</main>
+</UserProvider>
         
       </body>
     </html>

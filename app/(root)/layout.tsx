@@ -10,6 +10,8 @@ import {
 import LightRays from "@/components/LightRays";
 import Navbar from "@/components/Navbar";
 import ClickSpark from "@/components/ClickSpark";
+import { UserProvider } from "@/context/UserContext";
+import { Providers } from "@/components/Providers";
 
 const schibstedGrotesk = Schibsted_Grotesk({
   variable: "--font-schibsted-grotesk",
@@ -36,7 +38,9 @@ export default function RootLayout({
       <body
         className={`${schibstedGrotesk.variable} ${martianMono.variable} min-h-screen bg-black antialiased`}
       >
-        <Navbar />
+<Providers>
+            <Navbar />
+        
         <ClickSpark
           sparkColor="#59deca"
           sparkSize={15}
@@ -60,11 +64,11 @@ export default function RootLayout({
               className="custom-rays"
             />
           </div>
-
           <main>
-            
-            {children}</main>
+            {children}
+          </main>
         </ClickSpark>
+</Providers>
       </body>
     </html>
   );

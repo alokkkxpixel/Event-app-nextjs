@@ -1,22 +1,47 @@
 // app/(root)/login/page.tsx
 "use client"
 
+import { useUser } from "@/context/UserContext";
 import axios from "axios";
 import Link from "next/link";
+import { redirect, RedirectType } from "next/navigation";
+import {  useRouter } from "next/navigation";
+import { NextRequest, NextResponse } from "next/server";
 import { useState } from "react";
 
 export default function LoginPage() {
+     const { setUser ,user,refreshUser} = useUser();
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState('')
-
-
+const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+ const router = useRouter();
    async function handleLogin(e:React.FormEvent) {
     e.preventDefault()
-     const res  = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`,{
+     setError("");
+    setLoading(true);
+    try {
+         const res  = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`,{
         email ,
         password
      })
-  console.log(res.data)
+//   console.log(res)
+  if (!res.data || res.status !== 201) {
+        setError(res.data.message || "Login failed");
+        return;
+      }
+       // Update context with the logged-in user
+      setUser(res.data.user);
+    console.log(user)
+       // Redirect to dashboard
+     router.push("/")
+    } catch (error) {
+  setError("Something went wrong. Please try again.", )
+     
+    }finally {
+      setLoading(false);
+    }
+
     
    }
  
@@ -37,7 +62,12 @@ export default function LoginPage() {
               Sign in to continue your journey
             </p>
           </div>
-
+      
+       {error && (
+            <div className="bg-destructive/20 text-destructive rounded-md px-4 py-2 text-sm text-center">
+              {error}
+            </div>
+          )}
           {/* Form Section */}
           <form className="flex flex-col gap-5 sm:gap-6" onSubmit={handleLogin}>
             
@@ -88,7 +118,7 @@ export default function LoginPage() {
               type="submit"
               className="bg-primary hover:bg-primary/90 text-dark-100 mt-2 w-full cursor-pointer rounded-[6px] px-4 py-3 text-base font-bold transition-colors sm:py-2.5 sm:text-lg"
             >
-              Sign In
+               {loading ? "Signing in..." : "Sign In"}
             </button>
           </form>
 
