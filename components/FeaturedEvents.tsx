@@ -1,6 +1,6 @@
 import { IEvent } from '@/database'
 import EventCard from './EventCard'
-import events from '@/lib/constants' assert { type: 'json' }
+import events from '@/lib/constants' 
 import axios from 'axios'
 import { cacheLife } from 'next/cache'
 
