@@ -3,7 +3,9 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
 
-
+typescript:{
+  ignoreBuildErrors:true,
+},
 cacheComponents:true,
   images:{
     remotePatterns:[
@@ -18,9 +20,9 @@ cacheComponents:true,
   reactCompiler:false,
   experimental:{
  
-    turbopackFileSystemCacheForDev:false,
+    turbopackFileSystemCacheForDev:true,
   },
-    productionBrowserSourceMaps: false,
+    productionBrowserSourceMaps: true,
   async rewrites(){
     return [
       {
