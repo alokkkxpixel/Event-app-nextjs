@@ -10,8 +10,8 @@ export async function POST(req: NextRequest) {
     await connectDB();
 
     const { email, password } = await req.json();
-
-    const user = await User.findOne({ email });
+     console.log("email , password" , email , password)
+    const user = await User.findOne({ email }).select("+password")
 
     if (!user) {
       return NextResponse.json(
