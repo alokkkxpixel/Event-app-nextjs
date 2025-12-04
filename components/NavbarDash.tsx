@@ -2,10 +2,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
-const Navbar = () => {
+const NavbarDash = () => {
   return (
     <header >
-        <nav >
+        <nav>
             
             <Link href='/' className='logo'>
              <Image src="/icons/logo.png" alt='logo' width={24} height={24}></Image>
@@ -15,7 +15,9 @@ const Navbar = () => {
             <ul>
                 <Link href='/'>Home</Link>
                 <Link href='/events'>Events</Link>
-                <Link href='/register'>Sign up</Link>
+                <Link href='/'>Create Event</Link>
+                <Link href='/login'>Logout</Link>
+                {/* <Link href='/signup'>Sign Up</Link> */}
 
 
             </ul>
@@ -25,4 +27,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default NavbarDash

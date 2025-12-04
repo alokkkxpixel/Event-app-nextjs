@@ -34,7 +34,7 @@ const [submitted, Setsubmitted] = useState(false)
        <form action="" onSubmit={handleSubmit}>
         <div>
             <label htmlFor="email">Email Address</label>
-            <input type="email" id="email" value={email} name="" onChange={(e)=> setEmail(e.target.value)} placeholder="Enter your email address" />
+            <input type="email" id="email" value={email} name="" required onChange={(e)=> setEmail(e.target.value)} placeholder="Enter your email address" />
           
         <button type="submit" className="button-submit">Submit</button>
         </div>
