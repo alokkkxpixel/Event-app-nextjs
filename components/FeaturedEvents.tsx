@@ -9,7 +9,7 @@ const FeaturedEvents = async () => {
 "use cache"
 cacheLife('hours')
 
- 
+ console.log(events)
 
   return (
 
